@@ -1,0 +1,12 @@
+{
+  "name": "Techtalk-app",
+  "version": "0.0.1",
+  "private": "true",
+  "description": "woohoo fun techtalk",
+  "dependencies": {
+    "express": "latest",
+    "socket.io": "latest",
+    "twitter": "latest"
+  },
+  "author": "Teehee"
+}
