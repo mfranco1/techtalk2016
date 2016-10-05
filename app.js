@@ -23,13 +23,17 @@ app.get('/', function(req,res){
 
 io.on('connection', function(socket){
   console.log('User has connected');
-  io.emit('stream_data', 'A user has connected');
-
   socket.on('new_filter', function(phrase){
     console.log('filter keyword: ' + phrase);
-    client.post('statuses/update', {status: 'testing twitter API: ' + phrase}, function(err, tweet, res){
-      if(err) throw err;
-      console.log(tweet);
+    var stream = client.stream('statuses/filter', {track: phrase});
+
+    stream.on('data', function(event){
+      console.log(event && event.text);
+      io.emit('stream_data', event && event.text);
+    });
+
+    stream.on('error', function(err){
+      throw err;
     });
   });
 });
