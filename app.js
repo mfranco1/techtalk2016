@@ -21,11 +21,12 @@ app.get('/', function(req,res){
   res.sendFile(__dirname + '/index.html');
 });
 
+var stream;
 io.on('connection', function(socket){
   console.log('User has connected');
   socket.on('new_filter', function(phrase){
     console.log('filter keyword: ' + phrase);
-    var stream = client.stream('statuses/filter', {track: phrase});
+    stream = client.stream('statuses/filter', {track: phrase});
 
     stream.on('data', function(event){
       console.log(event && event.text);
